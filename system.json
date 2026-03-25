@@ -2,7 +2,7 @@
   "id": "worldbuilding",
   "version": "0.8.2",
   "title": "Simple World-Building",
-  "url": "https://github.com/foundryvtt/worldbuilding/",
+  "url": "https://github.com/kaunar-de-renard/worldbuilding-V13/",
   "description": "A minimalist game system which provides configurable Actor and Item templates to support free-form system agnostic game-play.",
   "license": "LICENSE.txt",
   "authors": [
