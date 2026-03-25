@@ -40,5 +40,5 @@
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
   "manifest": "https://raw.githubusercontent.com/kaunar-de-renard/worldbuilding-V13/main/system.json",
-  "download": "https://github.com/kaunar-de-renard/worldbuilding-V13/releases/download/0.2/worldbuildingV13.zip"
+  "download": "https://github.com/kaunar-de-renard/worldbuilding-V13/releases/download/dl/worldbuildingv13.zip"
 }
