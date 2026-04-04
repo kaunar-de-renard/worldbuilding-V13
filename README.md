@@ -1,3 +1,17 @@
-# Simple Worldbuilding System ver V13
+<ol class="groups-list">
+    {{#each groups as |group groupKey|}}
+    <li class="group" data-group="{{groupKey}}">
+        <div class="group-header flexrow">
+            <input class="group-key" type="text" readonly name="system.groups.{{groupKey}}.key" value="{{groupKey}}" />
+            <input class="group-label" type="text" name="system.groups.{{groupKey}}.label" value="{{group.label}}" placeholder="Group Label" />
+            <select class="group-dtype" name="system.groups.{{groupKey}}.dtype">
+	        {{selectOptions ../dtypes selected=group.dtype valueAttr="label" labelAttr="label"}}
+            </select>
+            <a class="attribute-control" data-action="attrControl" data-attr-op="create" data-group="{{groupKey}}" data-dtype="{{group.dtype}}"><i class="fas fa-plus"></i></a>
+            <a class="group-control" data-action="groupControl" data-group-op="delete-group"><i class="fas fa-trash"></i></a>
+        </div>
 
-A simple game system for Foundry VTT which allows for flexible definition of Actors and Items to assist with worldbuilding or for running games which do not have a more complete system implementation available.
+        {{> "systems/worldbuilding/templates/parts/sheet-attributes.html" attributes=group.attributes group=groupKey dtypes=../dtypes}}
+    </li>
+    {{/each}}
+</ol>

@@ -1,32 +1,62 @@
-const gulp = require('gulp');
-const less = require('gulp-less');
+<div class="flexcol {{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{data.img}}" data-action="editImage" data-field="img" title="{{data.name}}" />
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{data.name}}" placeholder="Name" />
+            </h1>
+            <div class="resource">
+                <label>Quantity</label>
+                <input type="number" name="system.quantity" value="{{systemData.quantity}}"/>
+            </div>
+            <div class="resource">
+                <label>Weight</label>
+                <input type="number" name="system.weight" value="{{systemData.weight}}"/>
+            </div>
+        </div>
+    </header>
 
-/* ----------------------------------------- */
-/*  Compile LESS
-/* ----------------------------------------- */
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description" data-group="primary">Description</a>
+        <a class="item" data-tab="attributes" data-group="primary">Attributes</a>
+    </nav>
 
-const SIMPLE_LESS = ["styles/*.less"];
-function compileLESS() {
-  return gulp.src("styles/simple.less")
-    .pipe(less())
-    .pipe(gulp.dest("./styles/"))
-}
-const css = gulp.series(compileLESS);
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
 
-/* ----------------------------------------- */
-/*  Watch Updates
-/* ----------------------------------------- */
+        {{!-- Description Tab --}}
+        <div class="tab" data-group="primary" data-tab="description">
+            {{#if editable}}
+            <prose-mirror name="system.description" button="true" editable="{{editable}}" toggled="false" value="{{systemData.description}}">
+                {{{descriptionHTML}}}
+            </prose-mirror>
+            {{else}}
+            {{{descriptionHTML}}}
+            {{/if}}
+        </div>
 
-function watchUpdates() {
-  gulp.watch(SIMPLE_LESS, css);
-}
+        {{!-- Attributes Tab --}}
+        <div class="tab attributes" data-group="primary" data-tab="attributes">
+            <header class="attributes-header flexrow">
+                <span class="attribute-key">{{localize "SIMPLE.AttributeKey"}}</span>
+                <span class="attribute-value">{{localize "SIMPLE.AttributeValue"}}</span>
+                <span class="attribute-label">{{localize "SIMPLE.AttributeLabel"}}</span>
+                <span class="attribute-dtype">{{localize "SIMPLE.AttributeDtype"}}</span>
+                <a class="attribute-control" data-action="attrControl" data-attr-op="create" data-group="{{group}}"><i class="fas fa-plus"></i></a>
+            </header>
 
-/* ----------------------------------------- */
-/*  Export Tasks
-/* ----------------------------------------- */
+            {{!-- Render the attribute list partial. --}}
+            {{> "systems/worldbuilding/templates/parts/sheet-attributes.html" attributes=systemData.ungroupedAttributes dtypes=dtypes}}
 
-exports.default = gulp.series(
-  gulp.parallel(css),
-  watchUpdates
-);
-exports.css = css;
+            {{!-- Render the grouped attributes partial and control. --}}
+            <div class="groups">
+                {{> "systems/worldbuilding/templates/parts/sheet-groups.html" attributes=systemData.groupedAttributes groups=systemData.groups dtypes=dtypes}}
+                <div class="group-controls flexrow">
+                    <input class="group-prefix" type="text" value=""/>
+                    <a class="button group-control" data-action="groupControl" data-group-op="create-group"><i class="fas fa-plus"></i>Add Attribute Group</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
